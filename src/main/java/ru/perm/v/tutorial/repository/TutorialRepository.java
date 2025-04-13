@@ -11,7 +11,7 @@ import java.util.Optional;
 
 @Repository
 public interface TutorialRepository extends JpaRepository<TutorialEntity, Long> {
-    List<TutorialEntity> findByNameOrderByNDesc(String name);
+    List<TutorialEntity> findByTitleOrderByNDesc(String name);
 
     Optional<TutorialEntity> findById(Long n);
     List<TutorialEntity> findAll();
