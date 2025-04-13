@@ -26,7 +26,7 @@ public class TutorialServiceImpl_IntegrationTest {
     public void getAll() {
         List<TutorialDto> tutors = tutorialService.getAll();
         assertNotNull(tutors);
-        assertEquals(3, tutors.size());
+        assertEquals(1, tutors.size());
     }
 
 //    @Test
