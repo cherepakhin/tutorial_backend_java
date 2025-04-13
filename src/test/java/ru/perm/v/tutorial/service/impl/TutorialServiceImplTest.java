@@ -1,7 +1,10 @@
 package ru.perm.v.tutorial.service.impl;
 
 import org.junit.jupiter.api.Test;
+import ru.perm.v.tutorial.dto.TutorialDto;
+import ru.perm.v.tutorial.entity.TutorialEntity;
 import ru.perm.v.tutorial.repository.TutorialRepository;
+import ru.perm.v.tutorial.service.TutorialService;
 
 import java.util.Arrays;
 import java.util.List;
@@ -10,41 +13,58 @@ import java.util.Optional;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
-public class TutorialServiceImplTest {
+class TutorialServiceImplTest {
     TutorialRepository tutorialRepository = mock(TutorialRepository.class);
 
     @Test
-    public void getAll() {
-//        ru.perm.v.companies.entity.TutorialEntity company1 = new ru.perm.v.companies.entity.TutorialEntity(1);
-//        ru.perm.v.companies.entity.TutorialEntity company2 = new ru.perm.v.companies.entity.TutorialEntity(2);
-//        when(companyRepository.findAll()).thenReturn(List.of(company1, company2));
-//        TutorialService companyService = new CompanyServiceImpl(companyRepository);
-//
-//        assertEquals(2, companyService.getAll().size());
+    void getAll() {
+        TutorialDto dto1 = new TutorialDto(1L);
+        TutorialDto dto2 = new TutorialDto(2L);
+
+        TutorialEntity entity1 = new TutorialEntity(1L);
+        TutorialEntity entity2 = new TutorialEntity(2L);
+        when(tutorialRepository.findAll()).thenReturn(List.of(entity1, entity2));
+
+        TutorialService tutorialService = new TutorialServiceImpl(tutorialRepository);
+
+        assertEquals(2, tutorialService.getAll().size());
     }
 
     @Test
-    public void getAll_asList() {
-//        ru.perm.v.companies.entity.TutorialEntity company1 = new ru.perm.v.companies.entity.TutorialEntity(1);
-//        ru.perm.v.companies.entity.TutorialEntity company2 = new ru.perm.v.companies.entity.TutorialEntity(2);
-//        when(companyRepository.findAll()).thenReturn(Arrays.asList(company1, company2));
-//        TutorialService companyService = new CompanyServiceImpl(companyRepository);
-//
-//        assertEquals(2, companyService.getAll().size());
+    void getAll_asList() {
+
+        TutorialEntity entity1 = new TutorialEntity(1L);
+        TutorialEntity entity2 = new TutorialEntity(2L);
+        when(tutorialRepository.findAll()).thenReturn(Arrays.asList(entity1, entity2));
+
+        TutorialService tutorialService = new TutorialServiceImpl(tutorialRepository);
+
+        List<TutorialDto> tutors = tutorialService.getAll();
+        assertEquals(2, tutors.size());
+
+        TutorialDto dto1 = new TutorialDto(1L);
+        TutorialDto dto2 = new TutorialDto(2L);
+        assertEquals(dto1, tutors.get(0));
+        assertEquals(dto2, tutors.get(1));
     }
 
 
     @Test
     public void getByN() {
-//        long ID = 2;
-//        ru.perm.v.companies.entity.TutorialEntity COMPANY = new ru.perm.v.companies.entity.TutorialEntity(ID);
-//        when(companyRepository.findById(ID)).thenReturn(java.util.Optional.of(COMPANY));
-//        TutorialService companyService = new CompanyServiceImpl(companyRepository);
-//        try {
-//            assertEquals(new TutorialDto(2L), companyService.getByN(ID));
-//        } catch (Exception e) {
-//            fail();
-//        }
+        Long N = 1L;
+        TutorialEntity entity1 = new TutorialEntity(N);
+        when(tutorialRepository.getOne(N)).thenReturn(entity1);
+
+        TutorialService tutorialService = new TutorialServiceImpl(tutorialRepository);
+
+        TutorialDto tutor = null;
+        try {
+            tutor = tutorialService.getByN(N);
+        } catch (Exception e) {
+            fail();
+        }
+        
+        assertEquals(N, tutor.getN());
     }
 
     @Test

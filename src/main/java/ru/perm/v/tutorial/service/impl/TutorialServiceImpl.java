@@ -5,6 +5,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ru.perm.v.tutorial.dto.TutorialDto;
+import ru.perm.v.tutorial.entity.TutorialEntity;
+import ru.perm.v.tutorial.mappers.TutorialMapper;
 import ru.perm.v.tutorial.repository.TutorialRepository;
 import ru.perm.v.tutorial.service.TutorialService;
 
@@ -43,9 +45,12 @@ public class TutorialServiceImpl implements TutorialService {
         return dtos;
     }
 
-    //TODO
     @Override
     public TutorialDto getByN(Long n) throws Exception {
+        TutorialEntity entity = tutorialRepository.getOne(n);
+        if (entity!=null) {
+            return TutorialMapper.fromEntityToDto(entity);
+        }
         return null;
     }
 

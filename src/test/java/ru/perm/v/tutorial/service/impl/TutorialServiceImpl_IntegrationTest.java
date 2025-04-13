@@ -26,15 +26,15 @@ public class TutorialServiceImpl_IntegrationTest {
     public void getAll() {
         List<TutorialDto> tutors = tutorialService.getAll();
         assertNotNull(tutors);
-        assertEquals(1, tutors.size());
+        assertEquals(3, tutors.size());
     }
 
-//    @Test
-//    public void getByN() throws Exception {
-//        TutorialDto tutorialDto = tutorialService.getByN(0L);
-//        assertEquals(0, tutorialDto.getN());
-//    }
-//
+    @Test
+    public void getByN() throws Exception {
+        TutorialDto tutorialDto = tutorialService.getByN(1L);
+        assertEquals(1L, tutorialDto.getN().longValue());
+    }
+
 //    @Test
 //    public void getByNotExistN() throws Exception {
 //        String errorMessage = "";
