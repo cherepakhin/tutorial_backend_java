@@ -38,7 +38,6 @@ public class TutorialServiceImpl implements TutorialService {
                 entity.getN(),
                 entity.getTitle(),
                 entity.getDescription(),
-                entity.getPublished(),
                 entity.getSubmitted()
         )).collect(Collectors.toList());
         return dtos;

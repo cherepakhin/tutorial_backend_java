@@ -15,10 +15,10 @@ class TutorialDtoTest {
 
     @Test
     void testToString() {
-        TutorialDto dto = new TutorialDto(1L,"TITLE", "DESCRIPTION", true, false);
+        TutorialDto dto = new TutorialDto(1L,"TITLE", "DESCRIPTION", true);
         String s = dto.toString();
 
-        assertEquals("TutorialDto{n=1, title='TITLE', description='DESCRIPTION', published=true, submitted=false}", s);
+        assertEquals("TutorialDto{n=1, title='TITLE', description='DESCRIPTION', submitted=true}", s);
     }
 
 //    @Test

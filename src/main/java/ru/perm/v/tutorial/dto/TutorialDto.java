@@ -6,7 +6,6 @@ public class TutorialDto {
     private Long n;
     private String title = "";
     private String description = "";
-    private Boolean published = false;
     private Boolean submitted = false;
 
     public TutorialDto() {
@@ -18,11 +17,10 @@ public class TutorialDto {
         this.n = n;
     }
 
-    public TutorialDto(Long n, String title, String description, Boolean published, Boolean submitted) {
+    public TutorialDto(Long n, String title, String description, Boolean submitted) {
         this.n = n;
         this.title = title;
         this.description = description;
-        this.published = published;
         this.submitted = submitted;
     }
 
@@ -50,14 +48,6 @@ public class TutorialDto {
         this.description = description;
     }
 
-    public Boolean getPublished() {
-        return published;
-    }
-
-    public void setPublished(Boolean published) {
-        this.published = published;
-    }
-
     public Boolean getSubmitted() {
         return submitted;
     }
@@ -71,12 +61,12 @@ public class TutorialDto {
         if (this == o) return true;
         if (!(o instanceof TutorialDto)) return false;
         TutorialDto that = (TutorialDto) o;
-        return Objects.equals(n, that.n) && Objects.equals(title, that.title) && Objects.equals(description, that.description) && Objects.equals(published, that.published) && Objects.equals(submitted, that.submitted);
+        return Objects.equals(n, that.n) && Objects.equals(title, that.title) && Objects.equals(description, that.description) && Objects.equals(submitted, that.submitted);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(n, title, description, published, submitted);
+        return Objects.hash(n, title, description, submitted);
     }
 
     @Override
@@ -85,7 +75,6 @@ public class TutorialDto {
                 "n=" + n +
                 ", title='" + title + '\'' +
                 ", description='" + description + '\'' +
-                ", published=" + published +
                 ", submitted=" + submitted +
                 '}';
     }
