@@ -27,6 +27,14 @@ public class TutorialEntity {
         this.n = n;
     }
 
+    public TutorialEntity(long n, String title, String description, Boolean submitted) {
+        super();
+        this.n = n;
+        this.title = title;
+        this.description = description;
+        this.submitted = submitted;
+    }
+
     public Long getN() {
         return n;
     }

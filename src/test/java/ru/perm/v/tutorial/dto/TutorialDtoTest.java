@@ -21,31 +21,36 @@ class TutorialDtoTest {
         assertEquals("TutorialDto{n=1, title='TITLE', description='DESCRIPTION', submitted=true}", s);
     }
 
-//    @Test
-//    void testToString() {
-//        EmployeeDto employeeDto = new EmployeeDto();
-//        CompanyDto companyDto = new CompanyDto(1L, "SHORTNAME", "FULLNAME", "INN", "OGRN","ADDRESS_POST","ADDRESS_UR", employeeDto);
-//        String result = companyDto.toString();
-//
-//        assertEquals("CompanyDto{n=1, shortName='SHORTNAME', fullName='FULLNAME', inn='INN', ogrn='OGRN', addressPost='ADDRESS_POST', addressUr='ADDRESS_UR'}", result.toString());
-//    }
-//
-//    @Test
-//    void testEquals() {
-//        EmployeeDto employeeDto = new EmployeeDto();
-//        CompanyDto companyDto1 = new CompanyDto(1L, "SHORTNAME", "FULLNAME", "INN", "OGRN","ADDRESS_POST","ADDRESS_UR", employeeDto);
-//        CompanyDto companyDto2 = new CompanyDto(1L, "SHORTNAME", "FULLNAME", "INN", "OGRN","ADDRESS_POST","ADDRESS_UR", employeeDto);
-//
-//        boolean result = companyDto1.equals(companyDto2);
-//
-//        assertTrue(result);
-//    }
-//
-//    @Test
-//    void testHashCode() {
-//        CompanyDto companyDto = new CompanyDto();
-//        int result = companyDto.hashCode();
-//        assertNotEquals(0, result);
-//    }
+    @Test
+    void hashCodeEquals() {
+        TutorialDto dto1 = new TutorialDto(1L,"TITLE", "DESCRIPTION", true);
+        TutorialDto dto2 = new TutorialDto(1L,"TITLE", "DESCRIPTION", true);
+
+        assertEquals(dto1.hashCode(), dto2.hashCode());
+    }
+    @Test
+    void hashCodeNotEquals() {
+        TutorialDto dto1 = new TutorialDto(1L,"TITLE", "DESCRIPTION", true);
+        TutorialDto dto2 = new TutorialDto(2L,"TITLE", "DESCRIPTION", true);
+
+        assertNotEquals(dto1.hashCode(), dto2.hashCode());
+    }
+
+    @Test
+    void testEquals() {
+        TutorialDto dto1 = new TutorialDto(1L,"TITLE", "DESCRIPTION", true);
+        TutorialDto dto2 = new TutorialDto(1L,"TITLE", "DESCRIPTION", true);
+
+        assertEquals(dto1, dto2);
+    }
+
+    @Test
+    void testNotEquals() {
+        TutorialDto dto1 = new TutorialDto(1L,"TITLE", "DESCRIPTION", true);
+        TutorialDto dto2 = new TutorialDto(2L,"TITLE", "DESCRIPTION", true);
+
+        assertNotEquals(dto1, dto2);
+    }
+
 }
 
