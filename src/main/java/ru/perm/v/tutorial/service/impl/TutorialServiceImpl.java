@@ -122,6 +122,9 @@ public class TutorialServiceImpl implements TutorialService {
         if (critery.getNn().size() > 0) {
             spec = spec.and(TutorialSpecification.nIn(critery.getNn()));
         }
+        if (!critery.getDescription().isEmpty()) {
+            spec = spec.and(TutorialSpecification.hasWithDescription(critery.getDescription()));
+        }
         List<TutorialEntity> tutors = tutorialRepository.findAll(spec);
         return TutorialMapper.fromListEntityToListDto(tutors);
     }

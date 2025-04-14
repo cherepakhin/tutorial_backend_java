@@ -17,5 +17,8 @@ public class TutorialSpecification {
     public static Specification<TutorialEntity> nIn(List<Long> nn) {
         return (root, query, criteriaBuilder) -> criteriaBuilder.in(root.get("n")).value(nn);
     }
+    public static Specification<TutorialEntity> hasWithDescription(String description) {
+        return (root, query, criteriaBuilder) -> criteriaBuilder.like(root.get("description"), description);
+    }
 
 }

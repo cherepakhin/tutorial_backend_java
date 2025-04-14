@@ -7,7 +7,7 @@ import java.util.Objects;
 public class TutorialCritery {
     private List<Long> nn = new ArrayList<>();
     private String title = "%";
-    private String description = "%";
+    private String description = "";
     private Boolean submitted;
 
     public List<Long> getNn() {
