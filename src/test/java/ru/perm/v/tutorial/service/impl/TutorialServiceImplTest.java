@@ -68,20 +68,12 @@ class TutorialServiceImplTest {
     }
 
     @Test
-    public void notFoundGetByN() {
-//        long ID = 2;
-//        when(companyRepository.findById(ID)).thenReturn(Optional.empty());
-//        TutorialService companyService = new CompanyServiceImpl(companyRepository);
-//        boolean OK = false;
-//        String errorMessage = "";
-//        try {
-//            companyService.getByN(ID);
-//        } catch (Exception e) {
-//            OK = true;
-//            errorMessage = e.getMessage();
-//        }
-//        assertTrue(OK);
-//        assertEquals("Company with id=2 NOT FOUND", errorMessage);
+    public void notFoundGetByN() throws Exception {
+        Long ID = 2L;
+        when(tutorialRepository.getOne(ID)).thenReturn(null);
+        TutorialService tutorialService = new TutorialServiceImpl(tutorialRepository);
+        TutorialDto dto = tutorialService.getByN(ID);
+        assertNull(dto);
     }
 
     @Test

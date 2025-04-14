@@ -56,7 +56,9 @@ public class TutorialServiceImpl implements TutorialService {
 
     //TODO
     @Override
-    public List<TutorialDto> getByTitle(String name) {
+    public List<TutorialDto> getByTitle(String title) {
+        List<TutorialEntity> tutors = tutorialRepository.findByTitleOrderByNDesc(title);
+
         return null;
     }
 
