@@ -52,7 +52,7 @@ class TutorialServiceImplTest {
     public void getByN() {
         Long N = 1L;
         TutorialEntity entity1 = new TutorialEntity(N);
-        when(tutorialRepository.getOne(N)).thenReturn(entity1);
+        when(tutorialRepository.findById(N)).thenReturn(Optional.of(entity1));
 
         TutorialService tutorialService = new TutorialServiceImpl(tutorialRepository);
 
