@@ -8,6 +8,7 @@ import ru.perm.v.tutorial.service.TutorialService;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
@@ -61,23 +62,31 @@ class TutorialServiceImplTest {
         } catch (Exception e) {
             fail();
         }
-        
+
         assertEquals(N, tutor.getN());
     }
 
     @Test
-    public void notFoundGetByN() throws Exception {
+    public void notFoundGetByN() {
         Long ID = 2L;
-        when(tutorialRepository.getOne(ID)).thenReturn(null);
+        when(tutorialRepository.findById(ID)).thenReturn(Optional.empty());
         TutorialService tutorialService = new TutorialServiceImpl(tutorialRepository);
-        TutorialDto dto = tutorialService.getByN(ID);
-        assertNull(dto);
+        Exception excpt = null;
+
+        try {
+            tutorialService.getByN(ID);
+        } catch (Exception e) {
+            excpt = e;
+        }
+
+        assertNotNull(excpt);
+        assertEquals("Tutorial with id=2 NOT FOUND", excpt.getMessage());
     }
 
     @Test
     void getByTitle() {
         String TITLE = "TITLE";
-        List<TutorialEntity> entities= List.of(new TutorialEntity(1L), new TutorialEntity(2L));
+        List<TutorialEntity> entities = List.of(new TutorialEntity(1L), new TutorialEntity(2L));
         when(tutorialRepository.findByTitleOrderByNDesc(TITLE)).thenReturn(entities);
         TutorialService tutorialService = new TutorialServiceImpl(tutorialRepository);
 
@@ -101,7 +110,7 @@ class TutorialServiceImplTest {
         } catch (Exception e) {
             fail();
         }
-        
+
         verify(tutorialRepository, times(1)).deleteById(N);
     }
 
@@ -117,7 +126,7 @@ class TutorialServiceImplTest {
         } catch (Exception e) {
             excpt = e;
         }
-        
+
         verify(tutorialRepository, never()).deleteById(N);
         assertNotNull(excpt);
         assertEquals("Tutorial with n=2 not found.", excpt.getMessage());
@@ -133,10 +142,11 @@ class TutorialServiceImplTest {
         } catch (Exception e) {
             exception = e;
         }
-        
+
         assertNotNull(exception);
         assertEquals("TutorialDto is null", exception.getMessage());
     }
+
     @Test
     void updateForNull_N_Dto() {
         TutorialDto tutorialDto = new TutorialDto();
@@ -152,6 +162,7 @@ class TutorialServiceImplTest {
         assertNotNull(exception);
         assertEquals("N TutorialDto is null", exception.getMessage());
     }
+
     @Test
     void updateForNull_TITLE_Dto() {
         TutorialDto tutorialDto = new TutorialDto();
@@ -168,6 +179,7 @@ class TutorialServiceImplTest {
         assertNotNull(exception);
         assertEquals("Title TutorialDto is null", exception.getMessage());
     }
+
     @Test
     void updateForNull_DESCRIPTION_Dto() {
         TutorialDto tutorialDto = new TutorialDto();
@@ -185,6 +197,7 @@ class TutorialServiceImplTest {
         assertNotNull(exception);
         assertEquals("Description TutorialDto is null", exception.getMessage());
     }
+
     @Test
     void updateForNotExistTutorial() {
         TutorialDto tutorialDto = new TutorialDto();
