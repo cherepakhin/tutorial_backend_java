@@ -8,7 +8,6 @@ import ru.perm.v.tutorial.service.TutorialService;
 
 import java.util.Arrays;
 import java.util.List;
-import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
@@ -74,6 +73,21 @@ class TutorialServiceImplTest {
         TutorialService tutorialService = new TutorialServiceImpl(tutorialRepository);
         TutorialDto dto = tutorialService.getByN(ID);
         assertNull(dto);
+    }
+
+    @Test
+    void getByTitle() {
+        String TITLE = "TITLE";
+        List<TutorialEntity> entities= List.of(new TutorialEntity(1L), new TutorialEntity(2L));
+        when(tutorialRepository.findByTitleOrderByNDesc(TITLE)).thenReturn(entities);
+        TutorialService tutorialService = new TutorialServiceImpl(tutorialRepository);
+
+        List<TutorialDto> dtos = tutorialService.getByTitle(TITLE);
+
+        assertEquals(2, dtos.size());
+
+        assertEquals(Long.valueOf(1), dtos.get(0).getN());
+        assertEquals(Long.valueOf(2), dtos.get(1).getN());
     }
 
     @Test

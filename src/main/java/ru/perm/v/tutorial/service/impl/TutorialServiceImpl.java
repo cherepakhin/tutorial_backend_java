@@ -54,12 +54,11 @@ public class TutorialServiceImpl implements TutorialService {
         return null;
     }
 
-    //TODO
     @Override
     public List<TutorialDto> getByTitle(String title) {
         List<TutorialEntity> tutors = tutorialRepository.findByTitleOrderByNDesc(title);
-
-        return null;
+        List<TutorialDto> dtos = TutorialMapper.fromListEntityToListDto(tutors);
+        return dtos;
     }
 
     //TODO
