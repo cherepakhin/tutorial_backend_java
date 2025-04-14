@@ -125,51 +125,114 @@ class TutorialServiceImplTest {
     }
 
     @Test
-    void getByShortName() {
-//        String SHORTNAME = "SHORTNAME";
-//        ru.perm.v.companies.entity.TutorialEntity company1 = new ru.perm.v.companies.entity.TutorialEntity(1);
-//        company1.setShortname(SHORTNAME);
-//        ru.perm.v.companies.entity.TutorialEntity company2 = new ru.perm.v.companies.entity.TutorialEntity(2);
-//        company2.setShortname(SHORTNAME);
-//
-//        TutorialService companyService = new CompanyServiceImpl(companyRepository);
-//        when(companyRepository.findByShortnameOrderByNDesc(SHORTNAME))
-//                .thenReturn(List.of(company1, company2));
-//
-//        List<TutorialDto> companies = companyService.getByShortName(SHORTNAME);
-//
-//        assertEquals(2, companies.size());
-//        assertEquals(SHORTNAME, companies.get(0).getShortname());
-//        assertEquals(SHORTNAME, companies.get(1).getShortname());
+    void updateForNullDto() {
+        TutorialDto tutorialDto = null;
+        TutorialService tutorialService = new TutorialServiceImpl(tutorialRepository);
+        Exception exception = null;
+        try {
+            tutorialService.update(tutorialDto);
+        } catch (Exception e) {
+            exception = e;
+        }
+        
+        assertNotNull(exception);
+        assertEquals("TutorialDto is null", exception.getMessage());
+    }
+    @Test
+    void updateForNull_N_Dto() {
+        TutorialDto tutorialDto = new TutorialDto();
+        tutorialDto.setN(null);
+        TutorialService tutorialService = new TutorialServiceImpl(tutorialRepository);
+        Exception exception = null;
+        try {
+            tutorialService.update(tutorialDto);
+        } catch (Exception e) {
+            exception = e;
+        }
+
+        assertNotNull(exception);
+        assertEquals("N TutorialDto is null", exception.getMessage());
+    }
+    @Test
+    void updateForNull_TITLE_Dto() {
+        TutorialDto tutorialDto = new TutorialDto();
+        tutorialDto.setN(1L);
+        tutorialDto.setTitle(null);
+        TutorialService tutorialService = new TutorialServiceImpl(tutorialRepository);
+        Exception exception = null;
+        try {
+            tutorialService.update(tutorialDto);
+        } catch (Exception e) {
+            exception = e;
+        }
+
+        assertNotNull(exception);
+        assertEquals("Title TutorialDto is null", exception.getMessage());
+    }
+    @Test
+    void updateForNull_DESCRIPTION_Dto() {
+        TutorialDto tutorialDto = new TutorialDto();
+        tutorialDto.setN(1L);
+        tutorialDto.setTitle("TITLE");
+        tutorialDto.setDescription(null);
+        TutorialService tutorialService = new TutorialServiceImpl(tutorialRepository);
+        Exception exception = null;
+        try {
+            tutorialService.update(tutorialDto);
+        } catch (Exception e) {
+            exception = e;
+        }
+
+        assertNotNull(exception);
+        assertEquals("Description TutorialDto is null", exception.getMessage());
+    }
+    @Test
+    void updateForNotExistTutorial() {
+        TutorialDto tutorialDto = new TutorialDto();
+        Long N = 1L;
+        tutorialDto.setN(N);
+        tutorialDto.setTitle("TITLE");
+        tutorialDto.setDescription("DESCRIPTION");
+
+        TutorialService tutorialService = new TutorialServiceImpl(tutorialRepository);
+        when(tutorialRepository.getOne(N)).thenReturn(null);
+        Exception exception = null;
+        try {
+            tutorialService.update(tutorialDto);
+        } catch (Exception e) {
+            exception = e;
+        }
+
+        assertNotNull(exception);
+        assertEquals("Tutorial with n=1 not found.", exception.getMessage());
     }
 
     @Test
-    void fromEntityToDto() {
-//        ru.perm.v.companies.entity.TutorialEntity tutorialEntity = new ru.perm.v.companies.entity.TutorialEntity();
-//        tutorialEntity.setN(100L);
-//        tutorialEntity.setInn("1234");
-//        tutorialEntity.setOgrn("OGRN");
-//        tutorialEntity.setAddressUr("ADDRESS_UR");
-//        tutorialEntity.setAddressPost("ADDRESS_POST");
-//        tutorialEntity.setShortname("SHORTNAME");
-//        EmployeeEntity DIRECTOR = new EmployeeEntity(10L);
-//        tutorialEntity.setDirector(DIRECTOR);
-//        tutorialEntity.setFullname("FULLNAME");
-//
-//        TutorialDto dto = ru.perm.v.companies.mappers.TutorialMapper.fromEntityToDto(tutorialEntity);
-//        TutorialDto expected = new TutorialDto();
-//        expected.setN(100L);
-//        expected.setInn("1234");
-//        expected.setOgrn("OGRN");
-//        expected.setAddressUr("ADDRESS_UR");
-//        expected.setAddressPost("ADDRESS_POST");
-//        expected.setShortname("SHORTNAME");
-//        expected.setFullname("FULLNAME");
-//        EmployeeDto DIRECTOR_DTO = new EmployeeDto();
-//        Long DIRECTOR_N = 200L;
-//        DIRECTOR_DTO.setN(DIRECTOR_N);
-//        expected.setDirector(DIRECTOR_DTO);
-//
-//        assertEquals(expected, dto);
+    void update() {
+        TutorialDto tutorialDto = new TutorialDto();
+        Long N = 1L;
+        tutorialDto.setN(N);
+        tutorialDto.setTitle("TITLE");
+        tutorialDto.setDescription("DESCRIPTION");
+
+        TutorialService tutorialService = new TutorialServiceImpl(tutorialRepository);
+        TutorialEntity entity = new TutorialEntity();
+        entity.setN(N);
+        entity.setTitle("TITLE");
+        entity.setDescription("DESCRIPTION");
+        entity.setSubmitted(true);
+        when(tutorialRepository.getOne(N)).thenReturn(entity);
+        when(tutorialRepository.saveAndFlush(entity)).thenReturn(entity);
+        Exception exception = null;
+        TutorialDto updatedDto = null;
+        try {
+            updatedDto = tutorialService.update(tutorialDto);
+        } catch (Exception e) {
+            exception = e;
+        }
+
+        assertNull(exception);
+        assertEquals(new TutorialDto(N, "TITLE", "DESCRIPTION", false), updatedDto);
+        verify(tutorialRepository, times(1)).saveAndFlush(entity);
     }
 }
