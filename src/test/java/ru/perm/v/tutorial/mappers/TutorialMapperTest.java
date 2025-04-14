@@ -4,9 +4,11 @@ import org.junit.jupiter.api.Test;
 import ru.perm.v.tutorial.dto.TutorialDto;
 import ru.perm.v.tutorial.entity.TutorialEntity;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 class TutorialMapperTest {
 
@@ -70,5 +72,25 @@ class TutorialMapperTest {
         assertEquals(2, entites.size());
         assertEquals(Long.valueOf(1L), entites.get(0).getN());
         assertEquals(Long.valueOf(2L), entites.get(1).getN());
+    }
+
+    @Test
+    void forEmptyDTOs() {
+        List<TutorialDto> dtos = new ArrayList<>();
+
+        List<TutorialEntity> entities = TutorialMapper.fromListDtoToListEntity(dtos);
+
+        assertNotNull(entities);
+        assertEquals(0, entities.size());
+    }
+
+    @Test
+    void forEmptyEntites() {
+        List<TutorialEntity> entities= new ArrayList<>();
+
+        List<TutorialDto> dtos = TutorialMapper.fromListEntityToListDto(entities);
+
+        assertNotNull(dtos);
+        assertEquals(0, dtos.size());
     }
 }
