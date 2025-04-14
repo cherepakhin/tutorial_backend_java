@@ -1,5 +1,6 @@
 package ru.perm.v.tutorial.service;
 
+import ru.perm.v.tutorial.critery.TutorialCritery;
 import ru.perm.v.tutorial.dto.TutorialDto;
 
 import java.util.List;
@@ -15,4 +16,7 @@ public interface TutorialService {
     void deleteByN(Long id) throws Exception;
 
     TutorialDto update(TutorialDto tutorialDto) throws Exception;
+
+    List<TutorialDto> getByCritery(TutorialCritery critery);
+    List<TutorialDto> getBySpecification(TutorialCritery critery);
 }

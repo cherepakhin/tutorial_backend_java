@@ -3,7 +3,11 @@ package ru.perm.v.tutorial.service.impl;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Example;
+import org.springframework.data.domain.ExampleMatcher;
 import org.springframework.stereotype.Service;
+import ru.perm.v.tutorial.critery.TutorialCritery;
+import ru.perm.v.tutorial.critery.TutorialSpecification;
 import ru.perm.v.tutorial.dto.TutorialDto;
 import ru.perm.v.tutorial.entity.TutorialEntity;
 import ru.perm.v.tutorial.mappers.TutorialMapper;
@@ -100,6 +104,21 @@ public class TutorialServiceImpl implements TutorialService {
         tutorialRepository.saveAndFlush(entity);
 
         return TutorialMapper.fromEntityToDto(entity);
+    }
+
+    @Override
+    public List<TutorialDto> getByCritery(TutorialCritery critery) {
+        TutorialEntity exampleTutorial = new TutorialEntity();
+        exampleTutorial.setN(critery.getNn().get(0));
+        ExampleMatcher exampleMatcher = ExampleMatcher.matching();
+        List<TutorialEntity> tutors = tutorialRepository.findAll(Example.of(exampleTutorial));
+        return TutorialMapper.fromListEntityToListDto(tutors);
+    }
+
+    @Override
+    public List<TutorialDto> getBySpecification(TutorialCritery critery) {
+        List<TutorialEntity> tutors = tutorialRepository.findAll(TutorialSpecification.hasWithTitle(critery.getTitle()));
+        return TutorialMapper.fromListEntityToListDto(tutors);
     }
 
 }
