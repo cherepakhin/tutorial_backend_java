@@ -91,11 +91,37 @@ class TutorialServiceImplTest {
     }
 
     @Test
-    void deleteById() {
-//        long ID = 2;
-//        TutorialService companyService = new CompanyServiceImpl(companyRepository);
-//        companyService.deleteById(ID);
-//        verify(companyRepository, times(1)).deleteById(ID);
+    void deleteByN_forExist() {
+        long N = 2L;
+        TutorialEntity entity = new TutorialEntity(1L);
+        when(tutorialRepository.getOne(N)).thenReturn(entity);
+        TutorialService tutorialService = new TutorialServiceImpl(tutorialRepository);
+
+        try {
+            tutorialService.deleteByN(N);
+        } catch (Exception e) {
+            fail();
+        }
+        
+        verify(tutorialRepository, times(1)).deleteById(N);
+    }
+
+    @Test
+    void deleteByN_forNotExist() {
+        long N = 2L;
+        when(tutorialRepository.getOne(N)).thenReturn(null);
+        TutorialService tutorialService = new TutorialServiceImpl(tutorialRepository);
+
+        Exception excpt = null;
+        try {
+            tutorialService.deleteByN(N);
+        } catch (Exception e) {
+            excpt = e;
+        }
+        
+        verify(tutorialRepository, never()).deleteById(N);
+        assertNotNull(excpt);
+        assertEquals("Tutorial with n=2 not found.", excpt.getMessage());
     }
 
     @Test

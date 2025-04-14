@@ -14,6 +14,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import static java.lang.String.format;
+
 @Service
 public class TutorialServiceImpl implements TutorialService {
 
@@ -48,7 +50,7 @@ public class TutorialServiceImpl implements TutorialService {
     @Override
     public TutorialDto getByN(Long n) throws Exception {
         TutorialEntity entity = tutorialRepository.getOne(n);
-        if (entity!=null) {
+        if (entity != null) {
             return TutorialMapper.fromEntityToDto(entity);
         }
         return null;
@@ -61,10 +63,14 @@ public class TutorialServiceImpl implements TutorialService {
         return dtos;
     }
 
-    //TODO
     @Override
-    public void deleteById(Long id) {
-
+    public void deleteByN(Long n) throws Exception {
+        TutorialEntity entity = tutorialRepository.getOne(n);
+        if (entity != null) {
+            tutorialRepository.deleteById(n);
+        } else {
+            throw new Exception(format("Tutorial with n=%s not found.", n));
+        }
     }
 
     //TODO

@@ -12,7 +12,7 @@ public interface TutorialService {
 
     List<TutorialDto> getByTitle(String title);
 
-    void deleteById(Long id);
+    void deleteByN(Long id) throws Exception;
 
     TutorialDto update(TutorialDto tutorialDto) throws Exception;
 }
