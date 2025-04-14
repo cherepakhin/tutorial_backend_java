@@ -31,7 +31,6 @@ class TutorialServiceImplTest {
 
     @Test
     void getAll_asList() {
-
         TutorialEntity entity1 = new TutorialEntity(1L);
         TutorialEntity entity2 = new TutorialEntity(2L);
         when(tutorialRepository.findAll()).thenReturn(Arrays.asList(entity1, entity2));
@@ -231,6 +230,7 @@ class TutorialServiceImplTest {
             exception = e;
         }
 
+        assertNotNull(updatedDto);
         assertNull(exception);
         assertEquals(new TutorialDto(N, "TITLE", "DESCRIPTION", false), updatedDto);
         verify(tutorialRepository, times(1)).saveAndFlush(entity);

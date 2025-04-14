@@ -13,8 +13,7 @@ import ru.perm.v.tutorial.service.TutorialService;
 
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
 public class TutorialServiceImpl_IntegrationTest {
@@ -32,7 +31,7 @@ public class TutorialServiceImpl_IntegrationTest {
     @Test
     public void getByN() throws Exception {
         TutorialDto tutorialDto = tutorialService.getByN(1L);
-        assertEquals(1L, tutorialDto.getN().longValue());
+        assertEquals(new TutorialDto(1L, "title 1","description 1", true), tutorialDto);
     }
 
 //    @Test
