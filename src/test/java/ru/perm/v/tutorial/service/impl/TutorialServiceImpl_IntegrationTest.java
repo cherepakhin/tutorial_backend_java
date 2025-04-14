@@ -48,10 +48,19 @@ public class TutorialServiceImpl_IntegrationTest {
     }
 
     @Test
-    void getByCritery() {
+    void getByNn() {
+//        TutorialCritery critery = new TutorialCritery();
+//        critery.setTitle("title 1");
+//        critery.setNn(List.of(1L));
+//        List<TutorialDto> tutors = tutorialService.getByCritery(critery);
+//
+//        assertEquals(1, tutors.size());
+//        TutorialDto dto = tutors.get(0);
+//        assertEquals(Long.valueOf(1), dto.getN());
         TutorialCritery critery = new TutorialCritery();
         critery.setNn(List.of(1L));
-        List<TutorialDto> tutors = tutorialService.getByCritery(critery);
+
+        List<TutorialDto> tutors = tutorialService.getBySpecification(critery);
 
         assertEquals(1, tutors.size());
         TutorialDto dto = tutors.get(0);

@@ -5,6 +5,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Example;
 import org.springframework.data.domain.ExampleMatcher;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import ru.perm.v.tutorial.critery.TutorialCritery;
 import ru.perm.v.tutorial.critery.TutorialSpecification;
@@ -54,8 +55,8 @@ public class TutorialServiceImpl implements TutorialService {
     public TutorialDto getByN(Long n) throws Exception {
         Optional<TutorialEntity> optional = tutorialRepository.findById(n);
         TutorialEntity entity;
-        if(optional.isPresent()) {
-            entity=optional.get();
+        if (optional.isPresent()) {
+            entity = optional.get();
             log.info(entity.toString());
             return TutorialMapper.fromEntityToDto(entity);
         }
@@ -117,7 +118,11 @@ public class TutorialServiceImpl implements TutorialService {
 
     @Override
     public List<TutorialDto> getBySpecification(TutorialCritery critery) {
-        List<TutorialEntity> tutors = tutorialRepository.findAll(TutorialSpecification.hasWithTitle(critery.getTitle()));
+        Specification<TutorialEntity> spec = TutorialSpecification.hasWithTitle(critery.getTitle());
+        if (critery.getNn().size() > 0) {
+            spec = spec.and(TutorialSpecification.nIn(critery.getNn()));
+        }
+        List<TutorialEntity> tutors = tutorialRepository.findAll(spec);
         return TutorialMapper.fromListEntityToListDto(tutors);
     }
 
