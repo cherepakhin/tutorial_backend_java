@@ -34,16 +34,16 @@ public class TutorialServiceImpl_IntegrationTest {
         assertEquals(new TutorialDto(1L, "title 1","description 1", true), tutorialDto);
     }
 
-//    @Test
-//    public void getByNotExistN() throws Exception {
-//        String errorMessage = "";
-//        try {
-//            tutorialService.getByN(-100L);
-//        } catch (Exception excp) {
-//            errorMessage = excp.getMessage();
-//        }
-//        assertEquals("Company with id=-100 NOT FOUND", errorMessage);
-//    }
+    @Test
+    public void getByNotExistN() throws Exception {
+        String errorMessage = "";
+        try {
+            tutorialService.getByN(-100L);
+        } catch (Exception excp) {
+            errorMessage = excp.getMessage();
+        }
+        assertEquals("Tutorial with id=-100 NOT FOUND", errorMessage);
+    }
 //
 //    @Test
 //    public void getByN_by_N1() throws Exception {

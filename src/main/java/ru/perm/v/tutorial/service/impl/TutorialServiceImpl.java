@@ -55,7 +55,7 @@ public class TutorialServiceImpl implements TutorialService {
             log.info(entity.toString());
             return TutorialMapper.fromEntityToDto(entity);
         }
-        return null;
+        throw new Exception(format("Tutorial with id=%s NOT FOUND", n));
     }
 
     @Override
