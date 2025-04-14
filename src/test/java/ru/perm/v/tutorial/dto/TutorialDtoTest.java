@@ -45,6 +45,13 @@ class TutorialDtoTest {
     }
 
     @Test
+    void testEqualsForSome() {
+        TutorialDto dto1 = new TutorialDto(1L,"TITLE", "DESCRIPTION", true);
+
+        assertEquals(dto1, dto1);
+    }
+
+    @Test
     void testNotEquals() {
         TutorialDto dto1 = new TutorialDto(1L,"TITLE", "DESCRIPTION", true);
         TutorialDto dto2 = new TutorialDto(2L,"TITLE", "DESCRIPTION", true);
