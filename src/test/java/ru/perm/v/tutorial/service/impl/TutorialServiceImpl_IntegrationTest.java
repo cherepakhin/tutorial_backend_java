@@ -129,4 +129,14 @@ public class TutorialServiceImpl_IntegrationTest {
         assertEquals(Long.valueOf(1), tutors.get(0).getN());
         assertEquals(Long.valueOf(2), tutors.get(1).getN());
     }
+
+    @Test
+    public void getByTitle() {
+        TutorialCritery critery = new TutorialCritery();
+        critery.setTitle("title 1");
+        List<TutorialDto> tutors = tutorialService.getBySpecification(critery);
+
+        assertEquals(1, tutors.size());
+        assertEquals(Long.valueOf(1), tutors.get(0).getN());
+    }
 }
