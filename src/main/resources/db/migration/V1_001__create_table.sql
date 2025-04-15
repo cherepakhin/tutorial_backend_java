@@ -7,5 +7,5 @@ CREATE table if not exists tutorial
     CONSTRAINT tutorial_pkey PRIMARY KEY (n)
 );
 
--- default value for null director
 insert into tutorial(n) values (-1);
+

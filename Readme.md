@@ -406,3 +406,15 @@ spring:
    flyway:
       baseline-on-migrate = true
 ````
+
+Очистка flyway:
+
+````shell
+./mvnw flyway:clean
+````
+
+Провести миграции:
+
+````shell
+./mvnw flyway:migrate
+````

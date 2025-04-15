@@ -1,27 +1,39 @@
 package ru.perm.v.tutorial.service.impl;
 
-import org.junit.jupiter.api.Test;
+import static junit.framework.TestCase.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+
+import org.junit.Test;
+import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.ActiveProfiles;
+import org.springframework.test.context.junit4.SpringRunner;
+
 import ru.perm.v.tutorial.critery.TutorialCritery;
 import ru.perm.v.tutorial.dto.TutorialDto;
 import ru.perm.v.tutorial.service.TutorialService;
 
 import java.util.List;
+import java.util.logging.Logger;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
 
+//@RunWith(SpringRunner.class)
 @SpringBootTest
+@RunWith(SpringRunner.class)
+@ActiveProfiles("dev")
 public class TutorialServiceImpl_IntegrationTest {
 
+    Logger logger = Logger.getLogger(this.getClass().getName());
     @Autowired
     TutorialService tutorialService;
 
     @Test
     public void getAll() {
         List<TutorialDto> tutors = tutorialService.getAll();
+        logger.info(tutors.toString());
         assertNotNull(tutors);
+
         assertEquals(3, tutors.size());
     }
 
@@ -43,7 +55,7 @@ public class TutorialServiceImpl_IntegrationTest {
     }
 
     @Test
-    void getByNn() {
+    public void getByNn() {
         TutorialCritery critery = new TutorialCritery();
         critery.setNn(List.of(1L));
 
@@ -55,7 +67,7 @@ public class TutorialServiceImpl_IntegrationTest {
     }
 
     @Test
-    void getBySpecificationForEqTitle() {
+    public void getBySpecificationForEqTitle() {
         TutorialCritery critery = new TutorialCritery();
         critery.setTitle("title 1");
         List<TutorialDto> tutors = tutorialService.getBySpecification(critery);
@@ -66,7 +78,7 @@ public class TutorialServiceImpl_IntegrationTest {
     }
 
     @Test
-    void getBySpecificationForLikeTitle() {
+    public void getBySpecificationForLikeTitle() {
         TutorialCritery critery = new TutorialCritery();
         critery.setTitle("title%");
         List<TutorialDto> tutors = tutorialService.getBySpecification(critery);
@@ -75,8 +87,9 @@ public class TutorialServiceImpl_IntegrationTest {
         assertEquals(Long.valueOf(1), tutors.get(0).getN());
         assertEquals(Long.valueOf(2), tutors.get(1).getN());
     }
+
     @Test
-    void getBySpecificationForNn() {
+    public void getBySpecificationForNn() {
         TutorialCritery critery = new TutorialCritery();
         critery.setNn(List.of(1L, 2L));
         List<TutorialDto> tutors = tutorialService.getBySpecification(critery);
@@ -85,8 +98,9 @@ public class TutorialServiceImpl_IntegrationTest {
         assertEquals(Long.valueOf(1), tutors.get(0).getN());
         assertEquals(Long.valueOf(2), tutors.get(1).getN());
     }
+
     @Test
-    void getBySpecificationForN() {
+    public void getBySpecificationForN() {
         TutorialCritery critery = new TutorialCritery();
         critery.setNn(List.of(1L));
         List<TutorialDto> tutors = tutorialService.getBySpecification(critery);
@@ -96,7 +110,7 @@ public class TutorialServiceImpl_IntegrationTest {
     }
 
     @Test
-    void getBySpecificationForDescription() {
+    public void getBySpecificationForDescription() {
         TutorialCritery critery = new TutorialCritery();
         critery.setDescription("description 1");
         List<TutorialDto> tutors = tutorialService.getBySpecification(critery);
@@ -106,7 +120,7 @@ public class TutorialServiceImpl_IntegrationTest {
     }
 
     @Test
-    void getBySpecificationForLikeDescription() {
+    public void getBySpecificationForLikeDescription() {
         TutorialCritery critery = new TutorialCritery();
         critery.setDescription("%description%");
         List<TutorialDto> tutors = tutorialService.getBySpecification(critery);
