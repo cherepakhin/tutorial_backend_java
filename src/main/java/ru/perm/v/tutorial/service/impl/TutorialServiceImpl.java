@@ -72,6 +72,7 @@ public class TutorialServiceImpl implements TutorialService {
 
     @Override
     public void deleteByN(Long n) throws Exception {
+        log.info(format("Delete tutorial with n=%s.", n));
         TutorialEntity entity = tutorialRepository.getOne(n);
         if (entity != null) {
             tutorialRepository.deleteById(n);

@@ -7,11 +7,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import ru.perm.v.tutorial.dto.TutorialDto;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.stream.Collectors;
 import ru.perm.v.tutorial.service.TutorialService;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/tutorial")
@@ -27,54 +25,55 @@ public class TutorialRest {
 
     @GetMapping("/")
     public ResponseEntity<List<TutorialDto>> getAll() {
-        log.info("get /company/getAll");
-//        List<TutorialDto> dtos = tutorialService
-//                .getAll()
-//                .stream()
-//                .map(c -> new TutorialDto(
-//                        c.getN(),
-//                        c.getShortname(),
-//                        c.getFullname(),
-//                        c.getInn(),
-//                        c.getOgrn(),
-//                        c.getAddressPost(),
-//                        c.getAddressUr(),
-//                        c.getDirector()
-//                ) {
-//                })
-//                .collect(Collectors.toList());
-        List<TutorialDto> dtos = new ArrayList<>();
+        log.info("get /tutorial/getAll");
+        List<TutorialDto> dtos = tutorialService.getAll();
         return ResponseEntity.ok(dtos);
     }
 
-    @GetMapping("/{id}")
-    public ResponseEntity<TutorialDto> getById(@PathVariable Long id) {
+    @GetMapping("/{n}")
+    public ResponseEntity<TutorialDto> getByN(@PathVariable Long n) {
         log.info("------------------------");
-        log.info(String.format("get /company/getById/%d", id));
-
-        String errorMessage = String.format("Tutorial not found id=%s", id);
-        log.error(errorMessage);
-        return new ResponseEntity(errorMessage, HttpStatus.BAD_GATEWAY);
-//        try {
-//            return ResponseEntity.ok(tutorialService.getByN(id));
-//        } catch (Exception e) {
-//            String errorMessage = String.format("Company not found id=%s", id);
-//            log.error(errorMessage);
-//            return new ResponseEntity(errorMessage, HttpStatus.BAD_GATEWAY);
-//        }
+        try {
+            return ResponseEntity.ok(tutorialService.getByN(n));
+        } catch (Exception e) {
+            String errorMessage = String.format("Tutorial not found n=%s", n);
+            log.error(errorMessage);
+            return new ResponseEntity(errorMessage, HttpStatus.BAD_GATEWAY);
+        }
     }
 
-    @DeleteMapping("/{id}")
-    public ResponseEntity<Long> deleteById(@PathVariable Long id) {
-//        log.info(String.format("delete /company/deleteById/%d", id));
-//        try {
-//            companyService.deleteById(id);
-//            return ResponseEntity.ok(id);
-//        } catch (Exception e) {
-//            log.error(e.getMessage());
-//            return new ResponseEntity(e.getMessage(), HttpStatus.BAD_GATEWAY);
-            return new ResponseEntity("ERROR TEXT", HttpStatus.BAD_GATEWAY);
-//        }
+    @DeleteMapping("/{n}")
+    public ResponseEntity<String> deleteByN(@PathVariable Long n) {
+        log.info(String.format("delete /tutorial/%d", n));
+        try {
+            tutorialService.getByN(n);
+        } catch (Exception e) {
+            String errorMessage = String.format("Tutorial not found n=%s", n);
+            return new ResponseEntity(errorMessage, HttpStatus.BAD_GATEWAY);
+        }
+        try {
+            tutorialService.deleteByN(n);
+        } catch (Exception e) {
+            return new ResponseEntity(e.getMessage(), HttpStatus.BAD_GATEWAY);
+        }
+        return ResponseEntity.ok().build();
+    }
+
+    @PostMapping("/")
+    public ResponseEntity<TutorialDto> update(@RequestBody TutorialDto dto) {
+        log.info(String.format("update /tutorial/%d", dto.getN()));
+        try {
+            tutorialService.getByN(dto.getN());
+        } catch (Exception e) {
+            String errorMessage = String.format("Tutorial not found n=%s", dto.getN());
+            return new ResponseEntity(errorMessage, HttpStatus.BAD_GATEWAY);
+        }
+        try {
+            tutorialService.update(dto);
+        } catch (Exception e) {
+            return new ResponseEntity(e.getMessage(), HttpStatus.BAD_GATEWAY);
+        }
+        return ResponseEntity.ok(dto);
     }
 
 }
