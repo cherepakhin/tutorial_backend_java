@@ -88,7 +88,7 @@ class TutorialServiceImplTest {
     void getByTitle() {
         String TITLE = "TITLE";
         List<TutorialEntity> entities = List.of(new TutorialEntity(1L), new TutorialEntity(2L));
-        when(tutorialRepository.findByTitleOrderByNDesc(TITLE)).thenReturn(entities);
+        when(tutorialRepository.findByTitleContainingOrderByNDesc(TITLE)).thenReturn(entities);
         TutorialService tutorialService = new TutorialServiceImpl(tutorialRepository);
 
         List<TutorialDto> dtos = tutorialService.getByTitle(TITLE);

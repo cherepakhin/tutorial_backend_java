@@ -67,7 +67,7 @@ public class TutorialServiceImpl implements TutorialService {
     public List<TutorialDto> getByTitle(String title) {
 //        List<TutorialEntity> tutors = tutorialRepository.findByTitleOrderByNDesc(title);
 //        List<TutorialDto> dtos = TutorialMapper.fromListEntityToListDto(tutors);
-        List<TutorialEntity> tutors = tutorialRepository.findByTitleContaining(title);
+        List<TutorialEntity> tutors = tutorialRepository.findByTitleContainingOrderByNDesc(title);
         return TutorialMapper.fromListEntityToListDto(tutors);
     }
 
