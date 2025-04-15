@@ -61,6 +61,9 @@ public class TutorialRest {
 
     @PostMapping("/")
     public ResponseEntity<TutorialDto> update(@RequestBody TutorialDto dto) {
+        if(dto == null) {
+            return new ResponseEntity("Null TutorialDto for update.", HttpStatus.BAD_GATEWAY);
+        }
         log.info(String.format("update /tutorial/%d", dto.getN()));
         try {
             tutorialService.getByN(dto.getN());

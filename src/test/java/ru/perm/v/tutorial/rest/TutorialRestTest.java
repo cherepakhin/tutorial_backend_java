@@ -23,7 +23,7 @@ public class TutorialRestTest {
         TutorialRest tutorialRest = new TutorialRest(tutorialService);
 
         ResponseEntity<List<TutorialDto>> response = tutorialRest.getAll();
-        List<TutorialDto> dtos= response.getBody();
+        List<TutorialDto> dtos = response.getBody();
 
         assertEquals(2, dtos.size());
         assertEquals(dto1, dtos.get(0));
@@ -70,43 +70,31 @@ public class TutorialRestTest {
         verify(tutorialService, times(1)).update(dto1);
     }
 
-//    @Test
-//    public void updateBadTutorial() {
-//        Long ID = 100L;
-//        TutorialDto dto1 = new TutorialDto(ID, "TITLE1", "DESCRIPTION1", true);
-//        TutorialRest tutorialRest = new TutorialRest(tutorialService);
-//    }
+    @Test
+    public void updateForNullTutorialCheckCode() {
+        TutorialRest tutorialRest = new TutorialRest(tutorialService);
+        ResponseEntity<?> response = tutorialRest.update(null);
 
-    //    @Test
-//    public void updateBadEmployee() {
-//        EmployeeDto employee1 = new EmployeeDto();
-//        employee1.setN(1L);
-//        employee1.setFirstname(""); // empty!
-//        employee1.setLastname("LAST_NAME_1");
-//        employee1.setFathername("FATHER_NAME_1");
-//        employee1.setBirthday("2021/01/01");
-//
-//        EmployeeRest employeeRest = new EmployeeRest(employeeService);
-//        ResponseEntity response = employeeRest.update(employee1);
-//
-//        assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
-//        ApiError apiError = (ApiError) response.getBody();
-//        assertEquals(HttpStatus.BAD_REQUEST, apiError.getStatus());
-//        assertEquals(1, apiError.getErrors().size());
-//        assertEquals("field: firstname, error: Firstname empty", apiError.getErrors().get(0));
-//    }
-//
-//
-//    @Test
-//    public void exceptionOnNotFoundGetById() throws Exception {
-//        Long ID = 100L;
-//        EmployeeRest rest = new EmployeeRest(employeeService);
-//
-//        when(employeeService.getByN(ID)).thenThrow(new Exception(("NOT FOUND")));
-//
-//        ResponseEntity response = rest.getById(ID);
-//        assertEquals(HttpStatus.BAD_GATEWAY, response.getStatusCode());
-//        assertEquals("Employee not found id=100", response.getBody());
-//    }
+        assertEquals(HttpStatus.BAD_GATEWAY, response.getStatusCode());
+    }
 
+    @Test
+    public void updateForNullTutorialCheckMessage() {
+        TutorialRest tutorialRest = new TutorialRest(tutorialService);
+        ResponseEntity<?> response = tutorialRest.update(null);
+
+        assertEquals("Null TutorialDto for update.", response.getBody());
+    }
+
+    @Test
+    public void updateForNotExistTutorial() throws Exception {
+        Long N = 100L;
+        TutorialDto dto1 = new TutorialDto(N, "TITLE1", "DESCRIPTION1", true);
+        when(tutorialService.update(dto1)).thenThrow(new Exception("ERROR"));
+        TutorialRest tutorialRest = new TutorialRest(tutorialService);
+        ResponseEntity<?> response = tutorialRest.update(dto1);
+
+        assertEquals(HttpStatus.BAD_GATEWAY, response.getStatusCode());
+        assertEquals("ERROR", response.getBody());
+    }
 }
