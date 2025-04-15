@@ -18,4 +18,6 @@ public interface TutorialRepository extends JpaRepository<TutorialEntity, Long> 
     Optional<TutorialEntity> findById(Long n);
     List<TutorialEntity> findAll();
     List<TutorialEntity> findAll(Specification<TutorialEntity> spec);
+    List<TutorialEntity> findByTitleContaining(String title);
+
 }

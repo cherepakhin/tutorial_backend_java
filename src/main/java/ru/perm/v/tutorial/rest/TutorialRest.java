@@ -11,6 +11,7 @@ import ru.perm.v.tutorial.service.TutorialService;
 
 import java.util.List;
 
+@CrossOrigin(origins = "http://localhost:8081")
 @RestController
 @RequestMapping("/tutorial")
 public class TutorialRest {
@@ -23,23 +24,37 @@ public class TutorialRest {
         this.tutorialService = tutorialService;
     }
 
+    // http :8980/api/tutorial/by/title%201
+    // http :8980/api/tutorial/by/1
+    // http :8980/api/tutorial/by/title
+    @GetMapping("/by_title/{title}")
+    public ResponseEntity<List<TutorialDto>> getByTitle(@PathVariable String title) {
+        log.info(String.format("getByTitle %s", title));
+        List<TutorialDto> dtos=tutorialService.getByTitle(title);
+        log.info(String.format("dtos:"));
+        for(TutorialDto dto: dtos) {
+            log.info(dto.toString());
+        }
+        return ResponseEntity.ok(dtos);
+    }
+
+//    @GetMapping("/{n}")
+//    public ResponseEntity<TutorialDto> getByN(@PathVariable Long n) {
+//        log.info("------------------------");
+//        try {
+//            return ResponseEntity.ok(tutorialService.getByN(n));
+//        } catch (Exception e) {
+//            String errorMessage = String.format("Tutorial not found n=%s", n);
+//            log.error(errorMessage);
+//            return new ResponseEntity(errorMessage, HttpStatus.BAD_GATEWAY);
+//        }
+//    }
+
     @GetMapping("/")
     public ResponseEntity<List<TutorialDto>> getAll() {
         log.info("get /tutorial/getAll");
         List<TutorialDto> dtos = tutorialService.getAll();
         return ResponseEntity.ok(dtos);
-    }
-
-    @GetMapping("/{n}")
-    public ResponseEntity<TutorialDto> getByN(@PathVariable Long n) {
-        log.info("------------------------");
-        try {
-            return ResponseEntity.ok(tutorialService.getByN(n));
-        } catch (Exception e) {
-            String errorMessage = String.format("Tutorial not found n=%s", n);
-            log.error(errorMessage);
-            return new ResponseEntity(errorMessage, HttpStatus.BAD_GATEWAY);
-        }
     }
 
     @DeleteMapping("/{n}")

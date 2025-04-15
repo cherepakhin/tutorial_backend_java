@@ -30,18 +30,33 @@ public class TutorialRestTest {
         assertEquals(dto2, dtos.get(1));
     }
 
+//    @Test
+//    void getById() throws Exception {
+//        Long N = 100L;
+//        TutorialDto dto1 = new TutorialDto(N, "TITLE1", "DESCRIPTION1", true);
+//
+//        when(tutorialService.getByN(N)).thenReturn(dto1);
+//        TutorialRest tutorialRest = new TutorialRest(tutorialService);
+//        ResponseEntity<TutorialDto> response = tutorialRest.getByN(N);
+//
+//        assertEquals(new ResponseEntity<>(dto1, HttpStatus.OK), response);
+//        assertEquals(HttpStatus.OK, response.getStatusCode());
+//        assertEquals(dto1, response.getBody());
+//    }
+
     @Test
-    void getById() throws Exception {
-        Long N = 100L;
-        TutorialDto dto1 = new TutorialDto(N, "TITLE1", "DESCRIPTION1", true);
-
-        when(tutorialService.getByN(N)).thenReturn(dto1);
+    void getByTitle() {
+        String TITLE = "TITLE1";
+        TutorialDto dto1 = new TutorialDto(100L, TITLE, "DESCRIPTION1", true);
+        when(tutorialService.getByTitle("TITLE1")).thenReturn(List.of(dto1));
         TutorialRest tutorialRest = new TutorialRest(tutorialService);
-        ResponseEntity<TutorialDto> response = tutorialRest.getByN(N);
 
-        assertEquals(new ResponseEntity<>(dto1, HttpStatus.OK), response);
-        assertEquals(HttpStatus.OK, response.getStatusCode());
-        assertEquals(dto1, response.getBody());
+        ResponseEntity<List<TutorialDto>> response = tutorialRest.getByTitle(TITLE);
+
+        List<TutorialDto> dtos = response.getBody();
+
+        assertEquals(1, dtos.size());
+        assertEquals(dto1, dtos.get(0));
     }
 
     @Test
