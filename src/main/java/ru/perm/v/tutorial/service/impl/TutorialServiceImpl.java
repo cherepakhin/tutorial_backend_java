@@ -42,7 +42,9 @@ public class TutorialServiceImpl implements TutorialService {
     //TODO
     @Override
     public List<TutorialDto> getAll() {
-        List<TutorialDto> dtos = tutorialRepository.findAll().stream().map(entity -> new TutorialDto(
+        List<TutorialDto> dtos = tutorialRepository.findAll().stream().filter(
+                tutor -> tutor.getN() > 0
+        ).map(entity -> new TutorialDto(
                 entity.getN(),
                 entity.getTitle(),
                 entity.getDescription(),

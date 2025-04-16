@@ -18,7 +18,6 @@ import java.util.List;
 import java.util.logging.Logger;
 
 
-//@RunWith(SpringRunner.class)
 @SpringBootTest
 @RunWith(SpringRunner.class)
 @ActiveProfiles("dev")
@@ -34,7 +33,7 @@ public class TutorialServiceImpl_IntegrationTest {
         logger.info(tutors.toString());
         assertNotNull(tutors);
 
-        assertEquals(3, tutors.size());
+        assertEquals(2, tutors.size());
     }
 
     @Test

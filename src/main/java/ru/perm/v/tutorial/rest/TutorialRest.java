@@ -24,6 +24,17 @@ public class TutorialRest {
         this.tutorialService = tutorialService;
     }
 
+    @GetMapping("/by_title/")
+    public ResponseEntity<List<TutorialDto>> getByAll() {
+        log.info(String.format("getAll"));
+        List<TutorialDto> dtos=tutorialService.getAll();
+        log.info(String.format("dtos:"));
+        for(TutorialDto dto: dtos) {
+            log.info(dto.toString());
+        }
+        return ResponseEntity.ok(dtos);
+    }
+
     // http :8980/api/tutorial/by/title%201
     // http :8980/api/tutorial/by/1
     // http :8980/api/tutorial/by/title
