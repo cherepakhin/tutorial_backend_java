@@ -78,7 +78,7 @@ public class TutorialRestTest {
         when(tutorialService.getByN(N)).thenReturn(dto1);
         TutorialRest tutorialRest = new TutorialRest(tutorialService);
 
-        ResponseEntity<TutorialDto> response = tutorialRest.update(dto1);
+        ResponseEntity<TutorialDto> response = tutorialRest.update(N, dto1);
 
         assertEquals(HttpStatus.OK, response.getStatusCode());
         verify(tutorialService, times(1)).getByN(N);
@@ -88,7 +88,7 @@ public class TutorialRestTest {
     @Test
     public void updateForNullTutorialCheckCode() {
         TutorialRest tutorialRest = new TutorialRest(tutorialService);
-        ResponseEntity<?> response = tutorialRest.update(null);
+        ResponseEntity<?> response = tutorialRest.update(1L, null);
 
         assertEquals(HttpStatus.BAD_GATEWAY, response.getStatusCode());
     }
@@ -96,7 +96,7 @@ public class TutorialRestTest {
     @Test
     public void updateForNullTutorialCheckMessage() {
         TutorialRest tutorialRest = new TutorialRest(tutorialService);
-        ResponseEntity<?> response = tutorialRest.update(null);
+        ResponseEntity<?> response = tutorialRest.update(1L, null);
 
         assertEquals("Null TutorialDto for update.", response.getBody());
     }
@@ -107,7 +107,7 @@ public class TutorialRestTest {
         TutorialDto dto1 = new TutorialDto(N, "TITLE1", "DESCRIPTION1", true);
         when(tutorialService.update(dto1)).thenThrow(new Exception("ERROR"));
         TutorialRest tutorialRest = new TutorialRest(tutorialService);
-        ResponseEntity<?> response = tutorialRest.update(dto1);
+        ResponseEntity<?> response = tutorialRest.update(N, dto1);
 
         assertEquals(HttpStatus.BAD_GATEWAY, response.getStatusCode());
         assertEquals("ERROR", response.getBody());

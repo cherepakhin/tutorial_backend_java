@@ -49,17 +49,17 @@ public class TutorialRest {
         return ResponseEntity.ok(dtos);
     }
 
-//    @GetMapping("/{n}")
-//    public ResponseEntity<TutorialDto> getByN(@PathVariable Long n) {
-//        log.info("------------------------");
-//        try {
-//            return ResponseEntity.ok(tutorialService.getByN(n));
-//        } catch (Exception e) {
-//            String errorMessage = String.format("Tutorial not found n=%s", n);
-//            log.error(errorMessage);
-//            return new ResponseEntity(errorMessage, HttpStatus.BAD_GATEWAY);
-//        }
-//    }
+    @GetMapping("/{n}")
+    public ResponseEntity<TutorialDto> getByN(@PathVariable Long n) {
+        log.info("------------------------");
+        try {
+            return ResponseEntity.ok(tutorialService.getByN(n));
+        } catch (Exception e) {
+            String errorMessage = String.format("Tutorial not found n=%s", n);
+            log.error(errorMessage);
+            return new ResponseEntity(errorMessage, HttpStatus.BAD_GATEWAY);
+        }
+    }
 
     @GetMapping("/")
     public ResponseEntity<List<TutorialDto>> getAll() {
@@ -85,8 +85,9 @@ public class TutorialRest {
         return ResponseEntity.ok().build();
     }
 
-    @PostMapping("/")
-    public ResponseEntity<TutorialDto> update(@RequestBody TutorialDto dto) {
+    @PostMapping("/{n}")
+    public ResponseEntity<TutorialDto> update(@PathVariable Long n, @RequestBody TutorialDto dto) {
+        log.info(String.format("update /tutorial/%d", n));
         if(dto == null) {
             return new ResponseEntity("Null TutorialDto for update.", HttpStatus.BAD_GATEWAY);
         }
