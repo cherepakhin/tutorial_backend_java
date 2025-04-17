@@ -16,7 +16,7 @@ public interface TutorialRepository extends JpaRepository<TutorialEntity, Long> 
     List<TutorialEntity> findByTitleOrderByNDesc(String name);
 
     Optional<TutorialEntity> findById(Long n);
-    List<TutorialEntity> findAll();
+    List<TutorialEntity> findAllByOrderByNAsc();
     List<TutorialEntity> findAll(Specification<TutorialEntity> spec);
     List<TutorialEntity> findByTitleContainingOrderByNDesc(String title);
 
