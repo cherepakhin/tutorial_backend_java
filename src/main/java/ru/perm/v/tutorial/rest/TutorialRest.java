@@ -107,7 +107,7 @@ public class TutorialRest {
     }
     @PostMapping("/")
     public ResponseEntity<TutorialDto> create(@RequestBody TutorialDto dto) {
-        log.info(String.format("create /tutorial/", dto));
+        log.info(String.format("create /tutorial/ %s", dto));
         if(dto == null) {
             return new ResponseEntity("Null TutorialDto for create.", HttpStatus.BAD_GATEWAY);
         }

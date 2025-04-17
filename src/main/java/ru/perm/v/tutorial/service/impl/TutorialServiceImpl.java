@@ -141,6 +141,7 @@ public class TutorialServiceImpl implements TutorialService {
         entity.setTitle(dto.getTitle());
         entity.setSubmitted(dto.getSubmitted());
         entity.setDescription(dto.getDescription());
+        log.info(format("Create %s", entity));
         TutorialEntity savedEntity = tutorialRepository.saveAndFlush(entity);
         return TutorialMapper.fromEntityToDto(savedEntity);
     }

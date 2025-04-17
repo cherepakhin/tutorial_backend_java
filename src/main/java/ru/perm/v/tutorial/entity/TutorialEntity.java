@@ -79,4 +79,14 @@ public class TutorialEntity {
     public int hashCode() {
         return Objects.hash(n, title, description, submitted);
     }
+
+    @Override
+    public String toString() {
+        return "TutorialEntity{" +
+                "n=" + n +
+                ", title='" + title + '\'' +
+                ", description='" + description + '\'' +
+                ", submitted=" + submitted +
+                '}';
+    }
 }
