@@ -247,4 +247,37 @@ class TutorialServiceImplTest {
         verify(tutorialRepository, times(1)).saveAndFlush(entity);
     }
 
+    @Test
+    void create() {
+        TutorialDto tutorialDto = new TutorialDto();
+        Long N = 1L;
+        tutorialDto.setN(N);
+        tutorialDto.setTitle("TITLE");
+        tutorialDto.setDescription("DESCRIPTION");
+        tutorialDto.setSubmitted(true);
+
+        TutorialEntity entity = new TutorialEntity();
+        Long NEW_N = 10L;
+        when(tutorialRepository.getNextN()).thenReturn(NEW_N);
+        entity.setN(NEW_N);
+        entity.setTitle("TITLE");
+        entity.setDescription("DESCRIPTION");
+        entity.setSubmitted(true);
+
+        when(tutorialRepository.saveAndFlush(entity)).thenReturn(entity);
+        TutorialService tutorialService = new TutorialServiceImpl(tutorialRepository);
+
+        TutorialDto createdDto = tutorialService.create(tutorialDto);
+
+        TutorialDto expectedDto = new TutorialDto();
+        expectedDto.setN(NEW_N);
+        expectedDto.setTitle("TITLE");
+        expectedDto.setDescription("DESCRIPTION");
+        expectedDto.setSubmitted(true);
+
+        assertNotNull(createdDto);
+        assertEquals(expectedDto, createdDto);
+
+        verify(tutorialRepository, times(1)).saveAndFlush(entity);
+    }
 }

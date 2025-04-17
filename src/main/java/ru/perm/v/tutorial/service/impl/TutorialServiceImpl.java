@@ -133,4 +133,16 @@ public class TutorialServiceImpl implements TutorialService {
         return TutorialMapper.fromListEntityToListDto(tutors);
     }
 
+    @Override
+    public TutorialDto create(TutorialDto dto) {
+        Long n = tutorialRepository.getNextN();
+        TutorialEntity entity = new TutorialEntity();
+        entity.setN(n);
+        entity.setTitle(dto.getTitle());
+        entity.setSubmitted(dto.getSubmitted());
+        entity.setDescription(dto.getDescription());
+        TutorialEntity savedEntity = tutorialRepository.saveAndFlush(entity);
+        return TutorialMapper.fromEntityToDto(savedEntity);
+    }
+
 }

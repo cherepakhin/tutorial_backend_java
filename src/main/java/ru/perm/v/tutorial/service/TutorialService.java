@@ -18,5 +18,8 @@ public interface TutorialService {
     TutorialDto update(TutorialDto tutorialDto) throws Exception;
 
     List<TutorialDto> getByCritery(TutorialCritery critery);
+
     List<TutorialDto> getBySpecification(TutorialCritery critery);
+
+    TutorialDto create(TutorialDto dto);
 }

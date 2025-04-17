@@ -105,5 +105,19 @@ public class TutorialRest {
         }
         return ResponseEntity.ok(dto);
     }
+    @PostMapping("/")
+    public ResponseEntity<TutorialDto> create(@RequestBody TutorialDto dto) {
+        log.info(String.format("create /tutorial/", dto));
+        if(dto == null) {
+            return new ResponseEntity("Null TutorialDto for create.", HttpStatus.BAD_GATEWAY);
+        }
+        try {
+            TutorialDto createdDto = tutorialService.create(dto);
+            return ResponseEntity.ok(createdDto);
+        } catch (Exception e) {
+            String errorMessage = String.format("Tutorial not created %s", e.getMessage());
+            return new ResponseEntity(errorMessage, HttpStatus.BAD_GATEWAY);
+        }
+    }
 
 }
