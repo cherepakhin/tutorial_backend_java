@@ -1,7 +1,6 @@
 package ru.perm.v.tutorial.service.impl;
 
 import org.junit.jupiter.api.Test;
-import ru.perm.v.tutorial.critery.TutorialCritery;
 import ru.perm.v.tutorial.dto.TutorialDto;
 import ru.perm.v.tutorial.entity.TutorialEntity;
 import ru.perm.v.tutorial.repository.TutorialRepository;
@@ -19,9 +18,6 @@ class TutorialServiceImplTest {
 
     @Test
     void getAll() {
-        TutorialDto dto1 = new TutorialDto(1L);
-        TutorialDto dto2 = new TutorialDto(2L);
-
         TutorialEntity entity1 = new TutorialEntity(1L);
         TutorialEntity entity2 = new TutorialEntity(2L);
         when(tutorialRepository.findAllByOrderByNAsc()).thenReturn(List.of(entity1, entity2));
