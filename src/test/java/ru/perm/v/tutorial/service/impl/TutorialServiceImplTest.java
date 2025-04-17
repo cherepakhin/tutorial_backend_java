@@ -24,7 +24,7 @@ class TutorialServiceImplTest {
 
         TutorialEntity entity1 = new TutorialEntity(1L);
         TutorialEntity entity2 = new TutorialEntity(2L);
-        when(tutorialRepository.findAll()).thenReturn(List.of(entity1, entity2));
+        when(tutorialRepository.findAllByOrderByNAsc()).thenReturn(List.of(entity1, entity2));
 
         TutorialService tutorialService = new TutorialServiceImpl(tutorialRepository);
 
@@ -35,7 +35,7 @@ class TutorialServiceImplTest {
     void getAll_asList() {
         TutorialEntity entity1 = new TutorialEntity(1L);
         TutorialEntity entity2 = new TutorialEntity(2L);
-        when(tutorialRepository.findAll()).thenReturn(Arrays.asList(entity1, entity2));
+        when(tutorialRepository.findAllByOrderByNAsc()).thenReturn(Arrays.asList(entity1, entity2));
 
         TutorialService tutorialService = new TutorialServiceImpl(tutorialRepository);
 
@@ -46,6 +46,7 @@ class TutorialServiceImplTest {
         TutorialDto dto2 = new TutorialDto(2L);
         assertEquals(dto1, tutors.get(0));
         assertEquals(dto2, tutors.get(1));
+        verify(tutorialRepository, times(1)).findAllByOrderByNAsc();
     }
 
 
