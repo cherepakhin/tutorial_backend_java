@@ -24,14 +24,10 @@ public class TutorialRest {
         this.tutorialService = tutorialService;
     }
 
-    @GetMapping("/by_title/")
-    public ResponseEntity<List<TutorialDto>> getByAll() {
-        log.info(String.format("getAll"));
-        List<TutorialDto> dtos=tutorialService.getAll();
-        log.info(String.format("dtos:"));
-        for(TutorialDto dto: dtos) {
-            log.info(dto.toString());
-        }
+    @GetMapping("/")
+    public ResponseEntity<List<TutorialDto>> getAll() {
+        log.info("get /tutorial/getAll");
+        List<TutorialDto> dtos = tutorialService.getAll();
         return ResponseEntity.ok(dtos);
     }
 
@@ -59,13 +55,6 @@ public class TutorialRest {
             log.error(errorMessage);
             return new ResponseEntity(errorMessage, HttpStatus.BAD_GATEWAY);
         }
-    }
-
-    @GetMapping("/")
-    public ResponseEntity<List<TutorialDto>> getAll() {
-        log.info("get /tutorial/getAll");
-        List<TutorialDto> dtos = tutorialService.getAll();
-        return ResponseEntity.ok(dtos);
     }
 
     @DeleteMapping("/{n}")
