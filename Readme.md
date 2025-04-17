@@ -255,7 +255,7 @@ Transfer-Encoding: chunked
 Проверка ответа при ошибке:
 
 ```shell
-$ http :8080/api/company/1000
+$ http :8080/api/tutorial/1000
 
 HTTP/1.1 502 
 Connection: keep-alive
@@ -417,4 +417,11 @@ spring:
 
 ````shell
 ./mvnw flyway:migrate
+````
+
+Ручная проверка сервиса backend:
+
+````shell
+http http://127.0.0.1:8980/api/tutorial/
+http http://192.168.1.57:8980/api/tutorial/
 ````
