@@ -279,5 +279,6 @@ class TutorialServiceImplTest {
         assertEquals(expectedDto, createdDto);
 
         verify(tutorialRepository, times(1)).saveAndFlush(entity);
+        verify(tutorialRepository, times(1)).getNextN();
     }
 }
