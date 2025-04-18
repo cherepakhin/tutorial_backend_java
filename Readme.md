@@ -439,5 +439,8 @@ http http://192.168.1.57:8980/api/tutorial/
 Запуск:
 
 ````shell
-java -jar target/tutorial-0.0.1.jar
+java -version
+> openjdk version "11.0.20" 2023-07-18 LTS
+
+$ java -jar target/tutorial-0.0.1.jar
 ````
