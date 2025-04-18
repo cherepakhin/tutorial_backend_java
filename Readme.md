@@ -425,3 +425,19 @@ spring:
 http http://127.0.0.1:8980/api/tutorial/
 http http://192.168.1.57:8980/api/tutorial/
 ````
+
+### Сборка и запуск jar
+
+Сборка:
+````shell
+./mvnw package
+
+````
+
+Размер jar файла ~35 Mb
+
+Запуск:
+
+````shell
+java -jar target/tutorial-0.0.1.jar
+````

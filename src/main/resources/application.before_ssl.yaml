@@ -1,0 +1,14 @@
+spring:
+  profiles:
+    active: dev
+
+server:
+  port: 8980
+  servlet:
+    context-path: /api
+  include-message: always
+  server.ssl.key-store: keystore.p12
+  server.ssl.key-store-password: pass
+  server.ssl.keyStoreType: PKCS12
+  server.ssl.keyAlias: tomcat
+  
