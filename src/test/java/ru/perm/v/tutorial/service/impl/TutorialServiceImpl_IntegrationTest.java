@@ -179,14 +179,31 @@ public class TutorialServiceImpl_IntegrationTest {
     }
 
     @Test
-    public void getAllSortByTitle() {
+    public void getByTitleSortByTitle() {
         TutorialCritery critery = new TutorialCritery();
         critery.setTitle("%1%");
         critery.setSortBy(TutorialSortBy.TITLE);
         List<TutorialDto> tutors = tutorialService.getBySpecification(critery);
 
-        assertEquals(2, tutors.size());
-        assertEquals(Long.valueOf(6), tutors.get(0).getN()); // Bootstrap 5 Buttons1
-        assertEquals(Long.valueOf(1), tutors.get(1).getN()); // Title 1
+        assertEquals(1, tutors.size());
+        assertEquals(Long.valueOf(1), tutors.get(0).getN()); // Title 1
+    }
+    @Test
+    public void getByLikeTitleSortByTitle() {
+        TutorialCritery critery = new TutorialCritery();
+        critery.setTitle("%Title%");
+        critery.setSortBy(TutorialSortBy.TITLE);
+        List<TutorialDto> tutors = tutorialService.getBySpecification(critery);
+
+        assertEquals(3, tutors.size());
+
+        assertEquals(Long.valueOf(1), tutors.get(0).getN()); // Title 1
+        assertEquals("Title 1", tutors.get(0).getTitle()); // Title 1
+
+        assertEquals(Long.valueOf(2), tutors.get(1).getN()); // Title 2
+        assertEquals("Title 2", tutors.get(1).getTitle()); // Title 1
+
+        assertEquals(Long.valueOf(3), tutors.get(2).getN()); // Title 3
+        assertEquals("Title 3", tutors.get(2).getTitle()); // Title 1
     }
 }
