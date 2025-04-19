@@ -25,9 +25,11 @@ public class TutorialRest {
     }
 
     @GetMapping("/")
+    @CrossOrigin(origins = "*")
     public ResponseEntity<List<TutorialDto>> getAll() {
         log.info("get /tutorial/getAll");
         List<TutorialDto> dtos = tutorialService.getAll();
+        log.info(String.format("dtos:%s", dtos));
         return ResponseEntity.ok(dtos);
     }
 
