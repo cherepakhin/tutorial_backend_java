@@ -111,7 +111,14 @@ flyway:
 Миграции в src/resources/migration. При изменении структуры вручную выполнить:
 
 ````shell
-$ ./mvnw flyway:migrate -Dflyway.user=vasi -Dflyway.password=pass -Dflyway.url=jdbc:postgresql://192.168.1.20:5432/tutorial
+$ ./mvnw flyway:migrate -Dflyway.user=postgres -Dflyway.password=postgres -Dflyway.url=jdbc:postgresql://127.0.0.1:5432/tutorial
+````
+
+Очистка БД:
+
+````shell
+delete from tutorial ;
+delete from flyway_schema_history ;
 ````
 
 ### Тестирование
@@ -365,6 +372,11 @@ Deploy:
 ./mvnw deploy
 ````
 
+### HTTPS
+
+__HTTPS!!!__. Открыть в __БРАУЗЕРЕ (не через httpie)__ :
+
+[https://127.0.0.1:8980/api/tutorial/](https://127.0.0.1:8980/api/tutorial/)
 
 ### Примечания:
 

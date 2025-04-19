@@ -33,13 +33,13 @@ public class TutorialServiceImpl_IntegrationTest {
         logger.info(tutors.toString());
         assertNotNull(tutors);
 
-        assertEquals(2, tutors.size());
+        assertEquals(4, tutors.size());
     }
 
     @Test
     public void getByN() throws Exception {
         TutorialDto tutorialDto = tutorialService.getByN(1L);
-        assertEquals(new TutorialDto(1L, "title 1", "description 1", true), tutorialDto);
+        assertEquals(new TutorialDto(1L, "Title 1", "description 1", true), tutorialDto);
     }
 
     @Test
@@ -68,7 +68,7 @@ public class TutorialServiceImpl_IntegrationTest {
     @Test
     public void getBySpecificationForEqTitle() {
         TutorialCritery critery = new TutorialCritery();
-        critery.setTitle("title 1");
+        critery.setTitle("Title 1");
         List<TutorialDto> tutors = tutorialService.getBySpecification(critery);
 
         assertEquals(1, tutors.size());
@@ -79,12 +79,13 @@ public class TutorialServiceImpl_IntegrationTest {
     @Test
     public void getBySpecificationForLikeTitle() {
         TutorialCritery critery = new TutorialCritery();
-        critery.setTitle("title%");
+        critery.setTitle("Title%");
         List<TutorialDto> tutors = tutorialService.getBySpecification(critery);
 
-        assertEquals(2, tutors.size());
+        assertEquals(3, tutors.size());
         assertEquals(Long.valueOf(1), tutors.get(0).getN());
         assertEquals(Long.valueOf(2), tutors.get(1).getN());
+        assertEquals(Long.valueOf(3), tutors.get(2).getN());
     }
 
     @Test
@@ -132,7 +133,7 @@ public class TutorialServiceImpl_IntegrationTest {
     @Test
     public void getByTitle() {
         TutorialCritery critery = new TutorialCritery();
-        critery.setTitle("title 1");
+        critery.setTitle("Title 1");
         List<TutorialDto> tutors = tutorialService.getBySpecification(critery);
 
         assertEquals(1, tutors.size());

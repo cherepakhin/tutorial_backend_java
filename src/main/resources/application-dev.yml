@@ -1,14 +1,8 @@
-server:
-  port: 8980
-  servlet:
-    context-path: /api
-  include-message: always
-
 spring:
   dataSource:
-    url: jdbc:postgresql://192.168.1.20:5432/tutorial
-    username: vasi
-    password: pass
+    url: jdbc:postgresql://127.0.0.1:5432/tutorial
+    username: postgres
+    password: postgres
   jpa:
     # show SQL statements in console.
     show-sql: true

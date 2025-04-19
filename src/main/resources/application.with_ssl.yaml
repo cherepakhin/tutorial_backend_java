@@ -3,13 +3,13 @@ spring:
     active: dev
 
 server:
-  port: 8980
+  port: 8443
   servlet:
     context-path: /api
   include-message: always
   ssl:
     key-alias: selfsigned_localhost_sslserver
-    key-store-password: bazilio
+    key-password: bazilio
     key-store: classpath:ssl-server.jks
     key-store-provider: SUN
     key-store-type: JKS

@@ -7,5 +7,4 @@ CREATE table if not exists tutorial
     CONSTRAINT tutorial_pkey PRIMARY KEY (n)
 );
 
-insert into tutorial(n) values (-1);
 
