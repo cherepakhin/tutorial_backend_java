@@ -1,9 +1,11 @@
 package ru.perm.v.tutorial.dto;
 
+import javax.validation.constraints.NotBlank;
 import java.util.Objects;
 
 public class TutorialDto {
     private Long n;
+    @NotBlank(message = "The Title should not be empty.")
     private String title = "";
     private String description = "";
     private Boolean submitted = false;
