@@ -1,7 +1,7 @@
 ## Типовой проект "Tutorials" (backend)
 
 Задание:<br/>
-1. Создать новый пустой Spring (5) Java-проект Web-приложения с поддержкой Maven, Java 11.  
+1. Создать новый пустой Spring (5) Java-проект Web-приложения с поддержкой Maven, Java 17.  
    Проект должен поддерживать подключение к PostgreSQL (12 и выше) и механизм миграций на базе Liquibase.  
    Необходимые настройки проекта (в том числе и параметры подключения к БД) должны храниться в профиле.
    При запуске проекта должны автоматически формироваться необходимые структуры данных в БД, а так же
@@ -25,7 +25,7 @@
 в Linux:
 
 ````shell
-export JAVA_HOME=/usr/lib/jvm/java-1.11.0-openjdk-amd64
+export JAVA_HOME=/usr/lib/jvm/java-17-openjdk-amd64
 ````
 
 в Windows:
@@ -35,7 +35,7 @@ export JAVA_HOME=/usr/lib/jvm/java-1.11.0-openjdk-amd64
 C:\>echo %JAVA_HOME%
 C:\po\jdk-21
 
-Z:\prog\java\companies> export JAVA_HOME=c:\po\open-jdk11 ?????
+Z:\prog\java\tutorial> export JAVA_HOME=c:\po\open-jdk11 ?????
 ````
 
 Проверка:
@@ -45,9 +45,10 @@ $ ./mvnw -version
 
 Apache Maven 3.6.3 (cecedd343002696d0abb50b32b541b8a6ba2883f)
 Maven home: /home/vasi/.m2/wrapper/dists/apache-maven-3.6.3-bin/1iopthnavndlasol9gbrbg6bf2/apache-maven-3.6.3
-Java version: 11.0.19, vendor: Ubuntu, runtime: /usr/lib/jvm/java-11-openjdk-amd64
+Java version: 17.0.7, vendor: Private Build, runtime: /usr/lib/jvm/java-17-openjdk-amd64
 Default locale: ru_RU, platform encoding: UTF-8
 OS name: "linux", version: "5.4.0-150-generic", arch: "amd64", family: "unix"
+
 
 ````
 
@@ -179,12 +180,12 @@ NOTE: No tests were executed!  -DfailIfNoTests=false to ignore this error
 
 ````shell
 // из cmd.exe
-companies>echo %JAVA_HOME%
+tutorial>echo %JAVA_HOME%
 C:\po\jdk-21 
 // из PowerShell
-companies>.\mvnw.cmd test -Dtest=*_IntegrationTest
-companies>.\mvnw.cmd test -Dtest=!*_IntegrationTest
-companies>.\mvnw.cmd test
+tutorial>.\mvnw.cmd test -Dtest=*_IntegrationTest
+tutorial>.\mvnw.cmd test -Dtest=!*_IntegrationTest
+tutorial>.\mvnw.cmd test
 ````
 
 Сборка без тестов:
@@ -235,7 +236,7 @@ spring:
 Профиль можно указать при запуске:
 
 ````shell
-$java -jar target/companies-0.0.1-SNAPSHOT.jar --spring.profiles.active=prod
+$java -jar target/tutorial-0.0.1-SNAPSHOT.jar --spring.profiles.active=prod
 ````
 
 ### Validate DTO
@@ -275,7 +276,7 @@ Company not found id=1000
 app.log:
 
 ````text
-ERROR [http-nio-8080-exec-1] ru.perm.v.companies.rest.CompanyRest: Company not found id=1000
+ERROR [http-nio-8080-exec-1] ru.perm.v.tutorial.rest.TutorialRest: Company not found id=1000
 ````
 
 ### ResponseEntity
@@ -284,18 +285,24 @@ ERROR [http-nio-8080-exec-1] ru.perm.v.companies.rest.CompanyRest: Company not f
 
 1) Простой:
 
-CompanyRest.deleteById(...)
+TutorialRest.deleteById(...)
 
 ````java
     @DeleteMapping("/{id}")
-    public ResponseEntity<Long> deleteById(@PathVariable Long id) {
-        try {
-            companyService.deleteById(id);
-            return ResponseEntity.ok(id);
-        } catch (Exception e) {
-            log.error(e.getMessage());
-            return new ResponseEntity(e.getMessage(), HttpStatus.BAD_GATEWAY);
-        }
+    public ResponseEntity<Long> deleteByТ(@PathVariable Long id) {
+      log.info(String.format("delete /tutorial/%d", n));
+      try {
+         tutorialService.getByN(n);
+      } catch (Exception e) {
+         String errorMessage = String.format("Tutorial not found n=%s", n);
+         return new ResponseEntity(errorMessage, HttpStatus.BAD_GATEWAY);
+      }
+      try {
+         tutorialService.deleteByN(n);
+      } catch (Exception e) {
+         return new ResponseEntity(e.getMessage(), HttpStatus.BAD_GATEWAY);
+      }
+      return ResponseEntity.ok().build();
     }
 ````
 
@@ -327,23 +334,23 @@ pipeline {
         stage('git clone') {
             steps {
                 sh 'pwd'
-                sh 'rm -rf compaines'
-                sh 'git clone https://github.com/cherepakhin/companies.git'
+                sh 'rm -rf tutorial'
+                sh 'git clone https://github.com/cherepakhin/tutorial.git'
                 sh 'ls'
             }
         }
         stage('unit tests') {
             steps {
                 sh 'ls'
-                sh 'cd companies;chmod +x mvnw;ls -al;pwd'
-                sh 'pwd;ls -al;cd companies;./mvnw test -Dtest=!*_IntegrationTest'
+                sh 'cd tutorial;chmod +x mvnw;ls -al;pwd'
+                sh 'pwd;ls -al;cd tutorial;./mvnw test -Dtest=!*_IntegrationTest'
                 sh 'ls'
             }
         }
         stage('deploy to nexus') {
             steps {
                 sh 'ls'
-                sh 'cd companies;ls;./mvnw -Dmaven.test.skip=true deploy'
+                sh 'cd tutorial;ls;./mvnw -Dmaven.test.skip=true deploy'
                 sh 'ls'
             }
         }
@@ -356,8 +363,8 @@ pipeline {
 
 ````text
  sh 'ls'
- sh 'cd companies;chmod +x mvnw;ls -al;pwd'
- sh 'pwd;ls -al;cd companies;./mvnw test -Dtest=!*_IntegrationTest'
+ sh 'cd tutorial;chmod +x mvnw;ls -al;pwd'
+ sh 'pwd;ls -al;cd tutorial;./mvnw test -Dtest=!*_IntegrationTest'
  sh 'ls'
 ````
 
@@ -372,7 +379,7 @@ Jenkins password: pass<br/>
 ./mvnw deploy
 ````
 
-Адрес Nexus сервиса в секции __"distributionManagement"__ в pom.xml.
+Адрес Nexus сервиса в секции __"distributionManagement"__ в pom.xml. Публикуется fat jar
 
 ### HTTPS
 
