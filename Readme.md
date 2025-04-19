@@ -366,11 +366,13 @@ pipeline {
 Jenkins user: vasi<br/>
 Jenkins password: pass<br/>
 
-Deploy:
+### Deploy to Nexus
 
 ```shell
 ./mvnw deploy
 ````
+
+Адрес Nexus сервиса в секции __"distributionManagement"__ в pom.xml.
 
 ### HTTPS
 
