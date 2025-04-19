@@ -11,6 +11,7 @@ import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import ru.perm.v.tutorial.critery.TutorialCritery;
+import ru.perm.v.tutorial.critery.TutorialSortBy;
 import ru.perm.v.tutorial.dto.TutorialDto;
 import ru.perm.v.tutorial.service.TutorialService;
 
@@ -100,6 +101,30 @@ public class TutorialServiceImpl_IntegrationTest {
     }
 
     @Test
+    public void getBySpecificationForNnSortByN() {
+        TutorialCritery critery = new TutorialCritery();
+        critery.setNn(List.of(1L, 2L));
+        critery.setSortBy(TutorialSortBy.N);
+        List<TutorialDto> tutors = tutorialService.getBySpecification(critery);
+
+        assertEquals(2, tutors.size());
+        assertEquals(Long.valueOf(1), tutors.get(0).getN());
+        assertEquals(Long.valueOf(2), tutors.get(1).getN());
+    }
+
+    @Test
+    public void getBySpecificationForNnSortByTitle() {
+        TutorialCritery critery = new TutorialCritery();
+        critery.setNn(List.of(1L, 2L));
+        critery.setSortBy(TutorialSortBy.N);
+        List<TutorialDto> tutors = tutorialService.getBySpecification(critery);
+
+        assertEquals(2, tutors.size());
+        assertEquals(Long.valueOf(1), tutors.get(0).getN());
+        assertEquals(Long.valueOf(2), tutors.get(1).getN());
+    }
+
+    @Test
     public void getBySpecificationForN() {
         TutorialCritery critery = new TutorialCritery();
         critery.setNn(List.of(1L));
@@ -138,5 +163,30 @@ public class TutorialServiceImpl_IntegrationTest {
 
         assertEquals(1, tutors.size());
         assertEquals(Long.valueOf(1), tutors.get(0).getN());
+    }
+
+    @Test
+    public void getAllSortByN() {
+        TutorialCritery critery = new TutorialCritery();
+        critery.setTitle("Title%");
+        critery.setSortBy(TutorialSortBy.N);
+        List<TutorialDto> tutors = tutorialService.getBySpecification(critery);
+
+        assertEquals(3, tutors.size());
+        assertEquals(Long.valueOf(1), tutors.get(0).getN());
+        assertEquals(Long.valueOf(2), tutors.get(1).getN());
+        assertEquals(Long.valueOf(3), tutors.get(2).getN());
+    }
+
+    @Test
+    public void getAllSortByTitle() {
+        TutorialCritery critery = new TutorialCritery();
+        critery.setTitle("%1%");
+        critery.setSortBy(TutorialSortBy.TITLE);
+        List<TutorialDto> tutors = tutorialService.getBySpecification(critery);
+
+        assertEquals(2, tutors.size());
+        assertEquals(Long.valueOf(6), tutors.get(0).getN()); // Bootstrap 5 Buttons1
+        assertEquals(Long.valueOf(1), tutors.get(1).getN()); // Title 1
     }
 }

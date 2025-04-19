@@ -10,6 +10,16 @@ public class TutorialCritery {
     private String description = "";
     private Boolean submitted;
 
+    private TutorialSortBy sortBy = TutorialSortBy.N;
+
+    public TutorialSortBy getSortBy() {
+        return sortBy;
+    }
+
+    public void setSortBy(TutorialSortBy sortBy) {
+        this.sortBy = sortBy;
+    }
+
     public List<Long> getNn() {
         return nn;
     }

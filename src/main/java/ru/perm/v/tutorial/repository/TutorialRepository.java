@@ -1,5 +1,6 @@
 package ru.perm.v.tutorial.repository;
 
+import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -17,8 +18,8 @@ public interface TutorialRepository extends JpaRepository<TutorialEntity, Long> 
 
     Optional<TutorialEntity> findById(Long n);
     List<TutorialEntity> findAllByOrderByNAsc();
-    List<TutorialEntity> findAll(Specification<TutorialEntity> spec);
-    List<TutorialEntity> findByTitleContainingOrderByNDesc(String title);
+    List<TutorialEntity> findAll(Specification<TutorialEntity> spec, Sort sort);
+    List<TutorialEntity> findByTitleContainingOrderByNAsc(String title);
 
     @Query(value = "SELECT max(n)+1 FROM TutorialEntity")
     Long getNextN();

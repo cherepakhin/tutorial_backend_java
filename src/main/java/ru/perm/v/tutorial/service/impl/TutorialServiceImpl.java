@@ -5,6 +5,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Example;
 import org.springframework.data.domain.ExampleMatcher;
+import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import ru.perm.v.tutorial.critery.TutorialCritery;
@@ -69,7 +70,7 @@ public class TutorialServiceImpl implements TutorialService {
     public List<TutorialDto> getByTitle(String title) {
 //        List<TutorialEntity> tutors = tutorialRepository.findByTitleOrderByNDesc(title);
 //        List<TutorialDto> dtos = TutorialMapper.fromListEntityToListDto(tutors);
-        List<TutorialEntity> tutors = tutorialRepository.findByTitleContainingOrderByNDesc(title);
+        List<TutorialEntity> tutors = tutorialRepository.findByTitleContainingOrderByNAsc(title);
         return TutorialMapper.fromListEntityToListDto(tutors);
     }
 
@@ -124,12 +125,15 @@ public class TutorialServiceImpl implements TutorialService {
     public List<TutorialDto> getBySpecification(TutorialCritery critery) {
         Specification<TutorialEntity> spec = TutorialSpecification.hasWithTitle(critery.getTitle());
         if (critery.getNn().size() > 0) {
+            log.info(format("Nn=%s", critery.getNn()));
             spec = spec.and(TutorialSpecification.nIn(critery.getNn()));
         }
         if (!critery.getDescription().isEmpty()) {
             spec = spec.and(TutorialSpecification.hasWithDescription(critery.getDescription()));
         }
-        List<TutorialEntity> tutors = tutorialRepository.findAll(spec);
+        String sortColumn = critery.getSortBy().toString().toLowerCase();
+        Sort sort = new Sort(Sort.Direction.ASC, sortColumn);
+        List<TutorialEntity> tutors = tutorialRepository.findAll(spec, sort);
         return TutorialMapper.fromListEntityToListDto(tutors);
     }
 
