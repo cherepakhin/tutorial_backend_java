@@ -281,4 +281,14 @@ class TutorialServiceImplTest {
         verify(tutorialRepository, times(1)).saveAndFlush(entity);
         verify(tutorialRepository, times(1)).getNextN();
     }
+
+    @Test
+    void deleteAll() {
+        TutorialService tutorialService = new TutorialServiceImpl(tutorialRepository);
+
+        String result = tutorialService.deleteAll();
+
+        assertEquals("", result);
+        verify(tutorialRepository, times(1)).deleteAll();
+    }
 }

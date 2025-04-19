@@ -112,4 +112,14 @@ public class TutorialRestTest {
         assertEquals(HttpStatus.BAD_GATEWAY, response.getStatusCode());
         assertEquals("ERROR", response.getBody());
     }
+
+    @Test
+    void deleteAll() {
+        when(tutorialService.deleteAll()).thenReturn("OK");
+        TutorialRest tutorialRest = new TutorialRest(tutorialService);
+
+        tutorialRest.deleteAll();
+
+        verify(tutorialService, times(1)).deleteAll();
+    }
 }

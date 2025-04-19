@@ -150,4 +150,10 @@ public class TutorialServiceImpl implements TutorialService {
         return TutorialMapper.fromEntityToDto(savedEntity);
     }
 
+    @Override
+    public String deleteAll() {
+        log.info("Delete all tutorials");
+        tutorialRepository.deleteAll();
+        return "";
+    }
 }

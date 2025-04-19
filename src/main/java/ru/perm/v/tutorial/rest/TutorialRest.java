@@ -59,6 +59,17 @@ public class TutorialRest {
         }
     }
 
+    @DeleteMapping("/")
+    public ResponseEntity<String> deleteAll() {
+        log.info("delete all");
+        try {
+            tutorialService.deleteAll();
+        } catch (Exception e) {
+            return new ResponseEntity(e.getMessage(), HttpStatus.BAD_GATEWAY);
+        }
+        return ResponseEntity.ok().build();
+    }
+
     @DeleteMapping("/{n}")
     public ResponseEntity<String> deleteByN(@PathVariable Long n) {
         log.info(String.format("delete /tutorial/%d", n));

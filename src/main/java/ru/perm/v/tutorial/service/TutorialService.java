@@ -22,4 +22,6 @@ public interface TutorialService {
     List<TutorialDto> getBySpecification(TutorialCritery critery);
 
     TutorialDto create(TutorialDto dto);
+
+    String deleteAll();
 }
